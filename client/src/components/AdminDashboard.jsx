@@ -36,10 +36,11 @@ function AdminDashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const baseURL = process.env.REACT_APP_BACKEND_URL;
         const [m, t, s] = await Promise.all([
-          axios.get("http://localhost:5000/api/movies"),
-          axios.get("http://localhost:5000/api/theaters"),
-          axios.get("http://localhost:5000/api/shows"),
+          axios.get(`${baseURL}/api/movies`),
+          axios.get(`${baseURL}/api/theaters`),
+          axios.get(`${baseURL}/api/shows`),
         ]);
         setMovies(m.data);
         setTheaters(t.data);
@@ -54,7 +55,7 @@ function AdminDashboard() {
   const handleMovieSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/admin/movie", movieData, {
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/admin/movie`, movieData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("✅ Movie Added");
@@ -67,7 +68,7 @@ function AdminDashboard() {
   const handleTheaterSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/admin/theater", theaterData, {
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/admin/theater`, theaterData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("✅ Theater Added");
@@ -80,7 +81,7 @@ function AdminDashboard() {
   const handleShowSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/admin/show", showData, {
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/admin/show`, showData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("✅ Show Created");
@@ -93,7 +94,7 @@ function AdminDashboard() {
   const handleDeleteShow = async () => {
     if (!selectedShowId) return alert("❗Please select a show to delete");
     try {
-      await axios.delete(`http://localhost:5000/api/admin/show/${selectedShowId}`, {
+      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/admin/show/${selectedShowId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("🗑️ Show deleted");
@@ -108,7 +109,7 @@ function AdminDashboard() {
   const handleDeleteMovie = async () => {
     if (!selectedMovieId) return alert("❗Please select a movie to delete");
     try {
-      await axios.delete(`http://localhost:5000/api/admin/movie/${selectedMovieId}`, {
+      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/admin/movie/${selectedMovieId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("🗑️ Movie deleted");
