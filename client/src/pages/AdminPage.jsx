@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./AdminPage.css"; 
+import "./AdminPage.css";
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+
 function AdminPage() {
   const [shows, setShows] = useState([]);
   const [bookings, setBookings] = useState([]);
@@ -10,25 +13,33 @@ function AdminPage() {
 
   useEffect(() => {
     const fetchShows = async () => {
-      const res = await axios.get("http://localhost:5000/api/shows", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setShows(res.data);
+      try {
+        const res = await axios.get(`${BACKEND_URL}/api/shows`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setShows(res.data);
+      } catch (err) {
+        console.error("❌ Error fetching shows:", err);
+      }
     };
     fetchShows();
   }, []);
 
   const fetchBookings = async (showId) => {
     setSelectedShowId(showId);
-    const res = await axios.get(`http://localhost:5000/api/admin/show/${showId}/bookings`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    setBookings(res.data);
+    try {
+      const res = await axios.get(`${BACKEND_URL}/api/admin/show/${showId}/bookings`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setBookings(res.data);
+    } catch (err) {
+      console.error("❌ Error fetching bookings:", err);
+    }
   };
 
   return (
     <div className="admin-page-container">
-      <h2> Shows List</h2>
+      <h2>Shows List</h2>
       <table className="shows-table">
         <thead>
           <tr>
@@ -56,7 +67,7 @@ function AdminPage() {
 
       {selectedShowId && (
         <>
-          <h3> Booked Seats for Selected Show</h3>
+          <h3>Booked Seats for Selected Show</h3>
           {bookings.length === 0 ? (
             <p>No bookings for this show.</p>
           ) : (
