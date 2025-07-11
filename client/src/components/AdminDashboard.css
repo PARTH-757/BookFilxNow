@@ -1,0 +1,82 @@
+.admin-dashboard {
+  font-family: "Segoe UI", sans-serif;
+  padding: 2rem;
+  background-color: #fff;
+}
+
+.admin-dashboard h3 {
+  color: #333;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.admin-dashboard form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.admin-dashboard input,
+.admin-dashboard select {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 2px solid #ff4747;
+  outline: none;
+  background-color: #fff;
+  color: #333;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-dashboard input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(35%) sepia(86%) saturate(5121%) hue-rotate(337deg) brightness(90%) contrast(98%);
+  cursor: pointer;
+}
+
+.admin-dashboard input:focus,
+.admin-dashboard select:focus {
+  border-color: #cc0000;
+  box-shadow: 0 0 5px rgba(255, 71, 71, 0.5);
+}
+
+.admin-dashboard button {
+  background-color: #ff4747;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  width: fit-content;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.admin-dashboard button:hover {
+  background-color: #e84141;
+  transform: scale(1.03);
+}
+
+/* Style dropdown menu options */
+.admin-dashboard select option {
+  background-color: #fff;
+  color: #333;
+  padding: 0.5rem;
+}
+
+/* Firefox-specific dropdown arrow styling */
+.admin-dashboard select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg fill='%23ff4747' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+}
+
+/* Remove calendar indicator background on hover */
+.admin-dashboard input[type="datetime-local"] {
+  color-scheme: light;
+}

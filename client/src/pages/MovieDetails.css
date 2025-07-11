@@ -1,0 +1,57 @@
+.movie-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.movie-poster {
+  max-width: 300px;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.movie-info {
+  max-width: 600px;
+  text-align: center;
+}
+
+.description {
+  font-style: italic;
+  margin: 1rem 0;
+}
+
+.book-button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #ff4747;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.trailer-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* ✅ Modified video container to match 100vh x 60vh frame */
+.video-container {
+  width: 100vh;         /* matches your video-section width */
+  height: 60vh;         /* matches your video-section height */
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}

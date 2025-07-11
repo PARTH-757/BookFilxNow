@@ -1,0 +1,68 @@
+/* AdminPage.css */
+.admin-page-container {
+  font-family: "Segoe UI", sans-serif;
+  padding: 2rem;
+  background: #fff;
+}
+
+.admin-page-container h2,
+.admin-page-container h3 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.shows-table,
+.bookings-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.shows-table th,
+.shows-table td,
+.bookings-table th,
+.bookings-table td {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  text-align: center;
+}
+
+.shows-table th,
+.bookings-table th {
+  background-color: #ff4747;
+  color: white;
+  font-weight: 600;
+}
+
+.shows-table tbody tr:hover,
+.bookings-table tbody tr:hover {
+  background-color: #ffeaea;
+}
+
+.view-btn {
+  background-color: #ff4747;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.view-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 71, 71, 0.4);
+}
+
+.dropdown-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #ff4747;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: white;
+  color: #333;
+  margin-bottom: 1rem;
+}
