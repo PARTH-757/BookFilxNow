@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "../components/MovieList.css"; 
+import "../components/MovieList.css";
+
+// Base API URL from environment or fallback
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://bookfilxnow-backend.onrender.com";
 
 function MovieList() {
   const [movies, setMovies] = useState([]);
@@ -9,7 +12,7 @@ function MovieList() {
   const [error, setError] = useState(null);     
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/movies")
+    axios.get(`${API_BASE_URL}/api/movies`)
       .then((res) => {
         setMovies(res.data);
         setLoading(false);
@@ -44,6 +47,5 @@ function MovieList() {
     </div>
   );
 }
-//PS: revise all the css files you tend to forget those
 
 export default MovieList;
