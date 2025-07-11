@@ -4,21 +4,25 @@ import { useNavigate } from "react-router-dom";
 
 import "./AuthPage.css";
 
+// You can set this in a .env file like:
+// REACT_APP_API_BASE_URL=https://bookfilxnow-backend.onrender.com
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://bookfilxnow-backend.onrender.com";
+
 function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });//  e.preventDefault();  Prevent form reload setLoading(true);    Disable button and show loading
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", form);
+      const res = await axios.post(`${API_BASE_URL}/api/auth/login`, form);
       const { token, user } = res.data;
 
       localStorage.setItem("token", token);
@@ -40,9 +44,13 @@ function LoginPage() {
     <div className="auth-page">
       <div className="auth-content">
         <div className="auth-heading">
-          <h1>Welcome to <span>BookFlixNow</span></h1>
-          <p>Make the immersive experience of silverscreen even special and convenient</p>
-          
+          <h1>
+            Welcome to <span>BookFlixNow</span>
+          </h1>
+          <p>
+            Make the immersive experience of silverscreen even more special and
+            convenient
+          </p>
         </div>
 
         <div className="auth-form">
@@ -65,16 +73,15 @@ function LoginPage() {
               required
             />
             <button type="submit" disabled={loading}>
-               {loading ? (
-                 <>
-                 Logging in...
-                <span className="spinner"></span>
-                    </>
-                   ) : (
-                   "Log In"
-                   )}
+              {loading ? (
+                <>
+                  Logging in...
+                  <span className="spinner"></span>
+                </>
+              ) : (
+                "Log In"
+              )}
             </button>
-
           </form>
         </div>
       </div>
