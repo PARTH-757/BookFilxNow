@@ -1,6 +1,7 @@
-// client/src/pages/MyBookings.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://bookfilxnow-backend.onrender.com";
 
 function MyBookings() {
   const [bookings, setBookings] = useState([]);
@@ -8,16 +9,17 @@ function MyBookings() {
   useEffect(() => {
     async function fetchBookings() {
       try {
-        const res = await axios.get("http://localhost:5000/api/booking/mybookings", {
+        const res = await axios.get(`${API_BASE_URL}/api/booking/mybookings`, {
           headers: {
-            "x-auth-token": localStorage.getItem("token")
-          }
+            "x-auth-token": localStorage.getItem("token"),
+          },
         });
         setBookings(res.data);
       } catch (err) {
         alert("Failed to fetch bookings");
       }
     }
+
     fetchBookings();
   }, []);
 
