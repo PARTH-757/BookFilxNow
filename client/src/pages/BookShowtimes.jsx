@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode"; // Use default import
+import { jwtDecode } from "jwt-decode"; // Use default import
 import "./BookShowtimes.css";
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
 function BookShowtimes() {
   const { movieId } = useParams();
@@ -37,7 +39,7 @@ function BookShowtimes() {
   useEffect(() => {
     async function fetchShows() {
       try {
-        const res = await axios.get(`http://localhost:5000/api/shows/movie/${movieId}`);
+        const res = await axios.get(`${BACKEND_URL}/api/shows/movie/${movieId}`);
         setShows(res.data);
 
         if (res.data.length > 0) {
