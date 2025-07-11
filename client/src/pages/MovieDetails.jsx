@@ -3,6 +3,9 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import "./MovieDetails.css";
 
+// Base API URL – pulled from .env or fallback to deployed backend
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://bookfilxnow-backend.onrender.com";
+
 function getEmbedUrl(trailerUrl) {
   if (!trailerUrl) return null;
   let videoId = "";
@@ -12,8 +15,7 @@ function getEmbedUrl(trailerUrl) {
   } else if (trailerUrl.includes("watch?v=")) {
     videoId = trailerUrl.split("watch?v=")[1].split("&")[0];
   } else if (trailerUrl.includes("embed/")) {
-    // Already an embed link
-    return trailerUrl;
+    return trailerUrl; // already embed
   }
 
   return `https://www.youtube.com/embed/${videoId}`;
@@ -27,7 +29,7 @@ function MovieDetails() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/movies/${id}`)
+      .get(`${API_BASE_URL}/api/movies/${id}`)
       .then((res) => {
         setMovie(res.data);
         setLoading(false);
@@ -45,15 +47,14 @@ function MovieDetails() {
 
   return (
     <div className="movie-details">
-      {movie.trailer && (// renders only if trailer exists
+      {movie.trailer && (
         <div className="trailer-wrapper">
           <div className="video-container">
             <iframe
               src={getEmbedUrl(movie.trailer)}
               title="Trailer"
-              frameBorder="0"// Removes the default border around the iframe (browser styling quirk).
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              //autoplay: start automaticallyclipboard-write: allow copyingencrypted-media: allow encrypted playback (e.g. DRM protected viideos are also played)picture-in-picture: let users pop the video out into a mini-window
               allowFullScreen
             ></iframe>
           </div>
@@ -70,7 +71,6 @@ function MovieDetails() {
         <Link to={`/book/${movie._id}`} className="book-button">
           🎟️ Book Now
         </Link>
-        
       </div>
     </div>
   );
