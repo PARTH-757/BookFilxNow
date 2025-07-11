@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./PaymentPage.css";
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://bookfilxnow-backend.onrender.com";
+
 function PaymentPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -13,13 +15,13 @@ function PaymentPage() {
   const handlePayment = async () => {
     try {
       // Step 1: Book the seats
-      await axios.post("http://localhost:5000/api/seats/book", {
+      await axios.post(`${API_BASE_URL}/api/seats/book`, {
         seatIds,
         userId,
       });
 
       // Step 2: Send email receipt
-      await axios.post("http://localhost:5000/api/receipt/send", {
+      await axios.post(`${API_BASE_URL}/api/receipt/send`, {
         userId,
         seatIds,
         showId,
