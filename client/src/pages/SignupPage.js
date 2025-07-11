@@ -4,20 +4,25 @@ import { useNavigate } from "react-router-dom";
 
 import "./AuthPage.css";
 
+// ✅ Use env variable or fallback to deployed backend
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://bookfilxnow-backend.onrender.com";
+
 function SignupPage() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const navigate = useNavigate();
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/signup", form);
+      const res = await axios.post(`${API_BASE_URL}/api/auth/signup`, form);
       localStorage.setItem("token", res.data.token);
       navigate("/");
     } catch (err) {
-      alert(err.response.data.msg);
+      alert(err.response?.data?.msg || "❌ Signup failed. Try again.");
     }
   };
 
@@ -25,9 +30,10 @@ function SignupPage() {
     <div className="auth-page">
       <div className="auth-content">
         <div className="auth-heading">
-          <h1>Welcome to <span>BookFlixNow</span></h1>
+          <h1>
+            Welcome to <span>BookFlixNow</span>
+          </h1>
           <p>Make the immersive experience of silverscreen even special and convenient</p>
-          
         </div>
 
         <div className="auth-form">
