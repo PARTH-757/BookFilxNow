@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import {jwtDecode} from "jwt-decode"; 
+import { jwtDecode } from "jwt-decode";
 import "./SeatSelection.css";
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "https://bookfilxnow-backend.onrender.com";
 
 function SeatSelection() {
   const { showId } = useParams();
@@ -12,13 +14,13 @@ function SeatSelection() {
   const [selected, setSelected] = useState([]);
   const [userId, setUserId] = useState(null);
 
-  // On mount: decode token to get userId
+  // Decode token to get userId
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        setUserId(decoded.id || decoded._id); // backend should send id or _id in token
+        setUserId(decoded.id || decoded._id);
       } catch (err) {
         console.error("Invalid token:", err);
         setUserId(null);
@@ -30,7 +32,7 @@ function SeatSelection() {
 
   const fetchSeats = () => {
     axios
-      .get(`http://localhost:5000/api/shows/${showId}/seats`)
+      .get(`${API_BASE_URL}/api/shows/${showId}/seats`)
       .then((res) => setSeats(res.data))
       .catch((err) => console.error("Error fetching seats:", err));
   };
@@ -52,19 +54,19 @@ function SeatSelection() {
     );
   };
 
-const handlePaymentRedirect = () => {
-  navigate("/payment", {
-    state: {
-      seatIds: selected,
-      userId,
-      showId,
-    },
-  });
-};
+  const handlePaymentRedirect = () => {
+    navigate("/payment", {
+      state: {
+        seatIds: selected,
+        userId,
+        showId,
+      },
+    });
+  };
 
   const cancelSeats = () => {
     axios
-      .post("http://localhost:5000/api/seats/cancel", {
+      .post(`${API_BASE_URL}/api/seats/cancel`, {
         seatIds: selected,
         userId,
       })
@@ -126,12 +128,12 @@ const handlePaymentRedirect = () => {
       {/* Action Buttons */}
       <div className="button-group">
         <button
-        id="selection2"
-        onClick={handlePaymentRedirect}
-        disabled={selected.length === 0 || !userId}
-          >
-            💳 Proceed to Payment
-          </button>
+          id="selection2"
+          onClick={handlePaymentRedirect}
+          disabled={selected.length === 0 || !userId}
+        >
+          💳 Proceed to Payment
+        </button>
 
         <button
           id="selection1"
