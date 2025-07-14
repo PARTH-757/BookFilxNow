@@ -3,48 +3,77 @@
   flex-direction: column;
   align-items: center;
   padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .movie-poster {
-  max-width: 300px;
-  border-radius: 10px;
+  max-width: 18rem;
+  border-radius: 0.8rem;
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 .movie-info {
-  max-width: 600px;
+  max-width: 38rem;
   text-align: center;
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.movie-info h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #2c2c2c;
+}
+
+.movie-info p {
+  margin: 0.6rem 0;
+  font-size: 1rem;
+  color: #555;
 }
 
 .description {
   font-style: italic;
-  margin: 1rem 0;
+  margin: 1.2rem 0;
+  color: #666;
 }
 
 .book-button {
   display: inline-block;
   margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
   background-color: #ff4747;
   color: white;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
+.book-button:hover {
+  background-color: #e53e3e;
+}
+
+/* Trailer container */
 .trailer-wrapper {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  margin: 2rem 0;
 }
 
-/* ✅ Modified video container to match 100vh x 60vh frame */
 .video-container {
-  width: 100vh;         /* matches your video-section width */
-  height: 60vh;         /* matches your video-section height */
-  position: relative;
-  border-radius: 10px;
+  width: 100vh;
+  height: 60vh;
+  max-width: 90%;
+  border-radius: 1rem;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  position: relative;
 }
 
 .video-container iframe {
@@ -54,4 +83,39 @@
   width: 100%;
   height: 100%;
   border: none;
+}
+
+/* Centered loading/error text */
+.center-text {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 2rem;
+}
+
+.error {
+  color: red;
+}
+
+/* Responsive design for small screens */
+@media (max-width: 768px) {
+  .movie-details {
+    padding: 1.2rem;
+  }
+
+  .video-container {
+    width: 90vw;
+    height: 50vw;
+  }
+
+  .movie-info {
+    padding: 1.2rem;
+  }
+
+  .movie-info h2 {
+    font-size: 1.4rem;
+  }
+
+  .book-button {
+    font-size: 0.95rem;
+  }
 }
