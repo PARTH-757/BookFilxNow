@@ -1,121 +1,81 @@
-.movie-details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  font-family: "Segoe UI", sans-serif;
-  background-color: #f9f9f9;
-  min-height: 100vh;
-  box-sizing: border-box;
-}
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import axios from "axios";
+import "./MovieDetails.css";
 
-.movie-poster {
-  max-width: 18rem;
-  border-radius: 0.8rem;
-  margin-bottom: 1rem;
-  width: 100%;
-}
+// Base API URL – pulled from .env or fallback to deployed backend
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "https://bookfilxnow-backend.onrender.com";
 
-.movie-info {
-  max-width: 38rem;
-  text-align: center;
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-}
+// Extract YouTube video ID and convert to embeddable URL
+function getEmbedUrl(trailerUrl) {
+  if (!trailerUrl) return null;
+  let videoId = "";
 
-.movie-info h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: #2c2c2c;
-}
-
-.movie-info p {
-  margin: 0.6rem 0;
-  font-size: 1rem;
-  color: #555;
-}
-
-.description {
-  font-style: italic;
-  margin: 1.2rem 0;
-  color: #666;
-}
-
-.book-button {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.6rem 1.2rem;
-  background-color: #ff4747;
-  color: white;
-  border-radius: 0.5rem;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-.book-button:hover {
-  background-color: #e53e3e;
-}
-
-/* Trailer container */
-.trailer-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 2rem 0;
-}
-
-.video-container {
-  width: 100vh;
-  height: 60vh;
-  max-width: 90%;
-  border-radius: 1rem;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  position: relative;
-}
-
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* Centered loading/error text */
-.center-text {
-  text-align: center;
-  font-size: 1.2rem;
-  padding: 2rem;
-}
-
-.error {
-  color: red;
-}
-
-/*  Responsive design for small screens */
-@media (max-width: 768px) {
-  .movie-details {
-    padding: 1.2rem;
+  if (trailerUrl.includes("youtu.be/")) {
+    videoId = trailerUrl.split("youtu.be/")[1].split("?")[0];
+  } else if (trailerUrl.includes("watch?v=")) {
+    videoId = trailerUrl.split("watch?v=")[1].split("&")[0];
+  } else if (trailerUrl.includes("embed/")) {
+    return trailerUrl; // already in embed format
   }
 
-  .video-container {
-    width: 90vw;
-    height: 50vw;
-  }
-
-  .movie-info {
-    padding: 1.2rem;
-  }
-
-  .movie-info h2 {
-    font-size: 1.4rem;
-  }
-
-  .book-button {
-    font-size: 0.95rem;
-  }
+  return `https://www.youtube.com/embed/${videoId}`;
 }
+
+function MovieDetails() {
+  const { id } = useParams();
+  const [movie, setMovie] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/api/movies/${id}`)
+      .then((res) => {
+        setMovie(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch movie:", err);
+        setError("Could not load movie details.");
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) return <p className="center-text">⏳ Loading movie details...</p>;
+  if (error) return <p className="center-text error">{error}</p>;
+  if (!movie) return <p className="center-text">Movie not found</p>;
+
+  return (
+    <div className="movie-details">
+      {movie.trailer && (
+        <div className="trailer-wrapper">
+          <div className="video-container">
+            <iframe
+              src={getEmbedUrl(movie.trailer)}
+              title="Trailer"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      )}
+
+      <div className="movie-info">
+        <h2>{movie.title}</h2>
+        <p className="description">{movie.description}</p>
+        <p><strong>Genre:</strong> {movie.genre}</p>
+        <p><strong>Rating:</strong> ⭐ {movie.rating}/10</p>
+        <p><strong>Location:</strong> {movie.location}</p>
+        <p><strong>Release Date:</strong> {new Date(movie.releaseDate).toDateString()}</p>
+        <Link to={`/book/${movie._id}`} className="book-button">
+          🎟️ Book Now
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+export default MovieDetails;
