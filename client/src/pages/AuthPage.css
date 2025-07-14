@@ -15,28 +15,17 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* Wrapper to contain both login and signup */
-.auth-box {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-/* Shared content style for both login and signup */
 .auth-content {
   background-color: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(8px);
   border-radius: 16px;
   padding: 2rem;
-  width: 100%;
   max-width: 400px;
+  width: 100%;
   color: #fff;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .auth-heading h1 {
@@ -96,7 +85,6 @@
   background-color: #e03d1a;
 }
 
-/* Spinner styling */
 .spinner {
   border: 4px solid #f3f3f3;
   border-top: 4px solid #3498db;
@@ -118,19 +106,13 @@
   }
 }
 
-/* Responsive layout */
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .auth-page {
     padding: 1rem;
   }
 
-  .auth-box {
-    flex-direction: column;
-    gap: 2rem;
-  }
-
   .auth-content {
-    width: 100%;
     padding: 1.5rem;
   }
 
