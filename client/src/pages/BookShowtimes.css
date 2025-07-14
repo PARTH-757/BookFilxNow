@@ -61,7 +61,7 @@
   margin-top: 0.5rem;
 }
 
-/* ✅ Responsive tweaks */
+/*  Responsive tweaks */
 @media (max-width: 600px) {
   .theater-header {
     flex-direction: column;
