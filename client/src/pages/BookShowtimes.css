@@ -1,3 +1,12 @@
+.showtimes-container {
+  padding: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.highlight {
+  color: #dc3545;
+}
+
 .theater-group {
   border: 1px solid #ddd;
   padding: 1rem;
@@ -9,8 +18,11 @@
 
 .theater-header {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
 
@@ -36,6 +48,7 @@
   font-weight: bold;
   background-color: #fff;
   transition: background-color 0.2s;
+  white-space: nowrap;
 }
 
 .showtime-slot:hover {
@@ -46,4 +59,21 @@
   font-size: 0.8rem;
   color: #888;
   margin-top: 0.5rem;
+}
+
+/* ✅ Responsive tweaks */
+@media (max-width: 600px) {
+  .theater-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .showtimes-row {
+    justify-content: flex-start;
+  }
+
+  .showtime-slot {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.9rem;
+  }
 }
