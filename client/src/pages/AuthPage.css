@@ -108,9 +108,6 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-import "./AuthPage.css";
+
 
