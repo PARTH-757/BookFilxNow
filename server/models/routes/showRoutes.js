@@ -46,22 +46,9 @@ router.get("/:showId/seats", async (req, res) => {
   }
 });
 
-//  Route 3: Get all shows (explicit /all path - optional now)
-router.get("/all", async (req, res) => {
-  try {
-    const shows = await Show.find()
-      .populate("movie", "title")
-      .populate("theater", "name location")
-      .sort("showTime");
 
-    res.json(shows);
-  } catch (err) {
-    console.error(" Error fetching all shows:", err);
-    res.status(500).json({ message: "Server error while fetching all shows." });
-  }
-});
 
-//  Route 4: Default GET /api/shows - returns all shows (RESTful way) just as top one but in a restful way this is default above one is preffered while debugging and redability
+//  Route 3: Default GET /api/shows - returns all shows (RESTful way) just as top one but in a restful way this is default above one is preffered while debugging and redability
 router.get("/", async (req, res) => {
   try {
     const shows = await Show.find()
