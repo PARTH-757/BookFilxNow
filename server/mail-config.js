@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({//It tells nodemailer to use Gma
 });
 
 //  Verify connection configuration (used at startup)
-transporter.verify((error, success) => {
+transporter.verify((error) => {
   if (error) {
     console.error(" Mail config error:", error);
   } else {
