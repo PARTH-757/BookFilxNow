@@ -31,19 +31,19 @@ router.post("/send", async (req, res) => {
     console.log(" Show fetched:", show.movie.title, "at", show.theater.name);//debugg
 
     console.log(" Fetching seats...");//debugg
-    const seats = await Seat.find({ _id: { $in: seatIds } });
+    const seats = await Seat.find({ _id: { $in: seatIds } });// all ids in Seat that match with seatids in the list seatIds.
     console.log("Seats fetched:", seats.map(s => s.seatNumber).join(", "));//debugg
 
     console.log(" Generating PDF...");//debugg
     const doc = new PDFDocument();
     let buffers = [];
 
-    doc.on("data", buffers.push.bind(buffers));
-    doc.on("end", async () => {
+    doc.on("data", buffers.push.bind(buffers));// This listens for "data" events from the doc object. Every time a chunk of PDF data is ready, it will be pushed into the buffers array.
+    doc.on("end", async () => {//This listens for the "end" event, which is triggered when PDF generation is finished.
       const pdfBuffer = Buffer.concat(buffers);
       console.log(" PDF generation complete");
 
-      const mailOptions = {
+      const mailOptions = {//This creates an object called mailOptions — this object tells the email system who to send to, what to send, and what to attach.
         from: `"BookFkixNow " <${process.env.GMAIL_USER}>`,
         to: user.email,
         subject: "🎟 Your Movie Ticket Receipt (ticket PDF Attached)",
