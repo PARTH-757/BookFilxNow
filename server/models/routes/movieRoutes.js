@@ -20,7 +20,8 @@ function getEmbedUrl(trailerUrl) {
 }
 
 
-//  GET /api/movies - Fetch all movies with optional filters
+//  GET /api/movies - Fetch all movies with optional filters  eg: GET /api/movies?location=Mumbai&genre=Comedy
+
 //gets movie data from server database and allows filtering based on location,  genre and date
 router.get("/", async (req, res) => {
   try {
