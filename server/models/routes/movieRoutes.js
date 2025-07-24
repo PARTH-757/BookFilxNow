@@ -7,7 +7,7 @@ function getEmbedUrl(trailerUrl) {
   if (!trailerUrl) return null;
   let videoId = "";
 
-  // Case 1: youtu.be/<id> when link is https://youtu.be/abcd1234
+  // Case 1: youtu.be/<id> when link is https://youtu.be/abcd1234 This splits the string at "youtu.be/". ["https://", "abc123DEF?autoplay=1"], [1] gives you:, "abc123DEF?autoplay=1"
   if (trailerUrl.includes("youtu.be/")) {
     videoId = trailerUrl.split("youtu.be/")[1].split("?")[0];
   }
